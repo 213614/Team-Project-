@@ -17,13 +17,14 @@
 → 로그인 후 서비스 이용 가능합니다. (마이페이지, 결제 등) 
 
 > 판매자 회원 계정 
-ID   :  privatecurve
+>ID   :  privatecurve  <br>
+>PW :  seller1234
+
 <br>
-PW :  seller1234
+ 
 > 일반회원 계정 
-ID   :  hansaem
-<br>
-PW :  buyer1234
+>ID   :  hansaem       <br>
+>PW :  buyer1234
 
 
 <hr>
