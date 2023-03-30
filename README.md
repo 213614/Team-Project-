@@ -14,12 +14,12 @@
 <br>
 링크 : http://hsaem.cafe24.com/
 <br>
-→ 로그인 후 서비스 이용 가능합니다. (마이페이지, 결제 등) 
+→ 로그인 후 서비스 이용 가능합니다. (마이페이지, 예매 및 결제 등) 
 
 > **판매자 회원 계정**      <br>
 >ID   :  privatecurve       <br>
 >PW :  seller1234
-><br>
+><br><br>
 > **일반회원 계정**         <br>
 >ID   :  hansaem            <br>
 >PW :  buyer1234
