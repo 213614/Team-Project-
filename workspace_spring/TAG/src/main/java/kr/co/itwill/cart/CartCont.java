@@ -144,6 +144,7 @@ public class CartCont {
 		if( !(m_id == null) ) {
 			
 			String[] arrayParam = req.getParameterValues("cartno");
+		
 	        /*  
 		    for (int i = 0; i < arrayParam.length; i++) {
 	              System.out.println(arrayParam[i]);
@@ -155,7 +156,12 @@ public class CartCont {
 	        CartDTO dto = new CartDTO();
 	        dto.setChkList(list);
 	        dto.setM_id(m_id);
-			
+	        
+	        //System.out.println((dto.getChkList()).size());
+	        // 장바구니 상품 갯수 체크용 (css변화)
+	        int cartcnt = dto.getChkList().size();
+	       
+	        
 			mav.setViewName("/cart/cartOrder");
 			mav.addObject("cartorder",cartDao.cartorder(dto));
 			mav.addObject("cart_orderPrice", cartDao.cart_orderPrice(dto));
@@ -163,7 +169,9 @@ public class CartCont {
 			mav.addObject("mem_cou", cartDao.mem_cou(dto));							// 구매자 해당 상품에 사용 가능 쿠폰리스트 
 			mav.addObject("mem_couCNT", cartDao.mem_couCNT(dto));					// 구매자 해당 상품에 사용 가능한 쿠폰 수량
 			mav.addObject("mem_couponTOTALCNT",productDao.mem_couponTOTALCNT(m_id));// 구매자 사용 가능 쿠폰 총 수량
-		
+						
+			mav.addObject("cartcnt",cartcnt);
+			
 			return mav;
 			
 		}else {
@@ -333,7 +341,7 @@ public class CartCont {
 			//mav.setViewName("/product/orderSucc");
 			
 			//return mav;
-			return "redirect:/product/succtest";
+			return "redirect:/product/succ";
 		/*
 		}else {			 // 로그아웃상태일때
 			mav.setViewName("/memberGeneral/alert"); //알림페이지로 이동

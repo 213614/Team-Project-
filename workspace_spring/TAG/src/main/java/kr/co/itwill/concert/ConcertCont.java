@@ -187,7 +187,7 @@ public class ConcertCont {
         mav.addObject("startPage", startPage);
         mav.addObject("endPage", endPage);
         
-        mav.addObject("orderby", "p");
+        mav.addObject("orderby", "l");
         
         return mav;
 	}// concertList() end

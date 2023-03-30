@@ -148,8 +148,10 @@
 }
 
 .bmodal-body {
-	padding: 2px 16px; --height: 530px;
+	padding-top: 2px;
+	padding-bottom: 2px;
 	position:relative;
+	padding-left: 100px;
 }
 
 .bmodal-footer {
@@ -163,14 +165,11 @@
 }
 
 #mainContainer {
-	--display: inline-block; 
 	position:relative; 
-	--overflow-y:scroll; 
-	--height:600px; 
+
 	height:100%; 
-	--width: 900px; 
+	
 	width: 70%; 
-	margin-left:120px;
 	float:left;
 }
 

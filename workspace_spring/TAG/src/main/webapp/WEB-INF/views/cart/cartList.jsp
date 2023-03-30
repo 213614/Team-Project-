@@ -493,16 +493,20 @@ function topFunction() {
 							    <tr>
 								    <td style="padding:0;">
 								    	<div class="product-imageandicon">
-											<a href="">
-											<img src="/storage/${row.postername}" width="140">
+											<a href="/product/${row.pro_no}">
+												<img src="/storage/${row.postername}" width="140">
 											</a>
 										</div>
 								    </td>
 								    <td>
 								    	<div class="concert-name">${row.title}</div>
-								    	<div class="product-name">${row.pro_name}</div>
+								    	<div class="product-name">
+								    		<a href="/product/${row.pro_no}">
+								    			${row.pro_name}
+								    		</a>
+								    	</div>
 								    	<div class="product-option">
-								    	색상:${row.color} / 사이즈: ${row.size}
+								    		색상:${row.color} / 사이즈: ${row.size}
 								    	</div>
 								    </td>
 							    </tr>
@@ -1004,23 +1008,19 @@ function setRegexp(price) {
 			
 			for(var i = 0 ; i <  chkArray.length ; i++){
 
-		    const hiddenplace = document.getElementById("hiddenplace");
-         const tag = document.createElement('p');
-         tag.innerHTML = "<input type='hidden' value='"+chkArray[i]+"' name='cartno'/>";
-         hiddenplace.appendChild(tag);
-
-         //alert(tag);
-		}//for end
+				 const hiddenplace = document.getElementById("hiddenplace");
+		         const tag = document.createElement('p');
+		         tag.innerHTML = "<input type='hidden' value='"+chkArray[i]+"' name='cartno'/>";
+		         hiddenplace.appendChild(tag);
+	
+	         //alert(tag);
+			}//for end
 		
 		}
 
-		
-		
-		
-		
 		return true;
 	}//end
-	
+
 //----------------------------------------------------------- 장바구니 선택 삭제 버튼 누를 때
 	function delbtn() {
 		

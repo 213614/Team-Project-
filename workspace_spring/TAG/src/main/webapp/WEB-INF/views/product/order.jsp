@@ -56,7 +56,7 @@ input[type="checkbox"] + label:before {
 		<span style="color:#b8b8b8" class="fontG"> 03 ORDER CONFIRM </span> 
 	</div>
 
-<form  action="/product/orderProc"  onsubmit="return orderCheck()"> <!-- 하단 스크립트 --> 
+<form id="frm" action="/product/orderProc"  onsubmit="return orderCheck()"> <!-- 하단 스크립트 --> 
 	<input type="hidden" value="${order_proinfo.pro_no}" name="pro_no">
 	<input type="hidden" value="" id="Fcp_dis" name="cp_dis">
 	<input type="hidden" value="" id="Fd_fee" name="d_fee">
@@ -343,7 +343,9 @@ input[type="checkbox"] + label:before {
 	//total_price += 3000;							// 기본 배송비
 	var m_id = "<c:out value='${m_id}'/>"
 	  
-	
+
+
+	/*
 	// 카카오페이 버튼! (한번 이미 결제 완료하면 아래 merchant_uid: 를 새롭게 바꿔줘야 결제진행이 됩니다...이유는 모름)
 	function payment(data) {
 		//alert(m_id);
@@ -367,7 +369,7 @@ input[type="checkbox"] + label:before {
 	        }
 	    });
 	}//kakaopay
-	
+	*/
 	
 	// 쿠폰 사용
 	$('#couponselect').change(function() {
@@ -541,7 +543,6 @@ input[type="checkbox"] + label:before {
      	  //alert(comma);
        }//if end
 	    
-	    
   		//console.log("total_price" + total_price);
 
   		var sum = 0;
@@ -650,6 +651,83 @@ input[type="checkbox"] + label:before {
   	}//end
  
     	 
+    // ↓ 카카오 페이용 4자리 랜덤 숫자 함수 
+    let str = ''
+    for (let i = 0; i < 4; i++) {	// 4자리 랜덤 숫자 
+      str += Math.floor(Math.random() * 10)
+    }//for end
+    
+    var randomuid = m_id + str;
+    
+    
+    // 카카오페이 버튼! 
+    function payment(data) {
+ 		//alert(m_id);
+ 		//alert(str);
+ 		//alert(m_id + str);
+ 		//alert(randomuid);
+ 		
+        // 약관 동의 체크박스 
+        if ( !($('#chk').is(':checked')) ){
+           alert('결제를 위해 약관에 동의해주세요.');
+           
+           return false;
+
+        }
+        
+        // 수령인 정보
+        if ( $('#rec_name').val() == '' ) {
+           //alert('받는 사람 이름이 입력되지 않았습니다.');
+           $('#namealert').css('display', 'inline-block');
+           $('#rec_name').focus();
+           
+           return false;  
+        }
+        
+        if ( $('#rec_tel').val() == '' ){
+           //alert('받는 사람 연락처가 입력되지 않았습니다.');
+           $('#telalert').css('display', 'inline-block');
+           $('#rec_tel').focus();
+           
+           return false;
+        }
+        
+ 	    if ( $('#rec_addr2').val() == '' ){
+           //alert('상세 주소가 입력되지 않았습니다.');
+           $('#addralert').css('display', 'inline-block');
+           $('#rec_addr2').focus();
+           
+ 	       return false;
+ 	    }
+ 		
+ 	    IMP.init('imp13534036');			 //아임포트 관리자 콘솔에서 확인한 '가맹점 식별코드' 입력
+ 	    IMP.request_pay({					 // param
+ 	        pg: "kakaopay.TC0ONETIME", 		 //pg사명 or pg사명.CID (잘못 입력할 경우, 기본 PG사가 띄워짐)
+ 	        pay_method: "card", 			 //지불 방법
+ 	        merchant_uid: randomuid,    	 //"iamport_test_id", //가맹점 주문번호 (아임포트를 사용하는 가맹점에서 중복되지 않은 임의의 문자열을 입력)
+ 	        name: "TAG:Ticket And Goods",    //결제창에 노출될 상품명
+ 	        amount: total_price, 			 //금액
+ 	        buyer_email : "teser@naver.com", 
+ 	        buyer_name : "홍길동",
+ 	        buyer_tel : "01012341234"
+ 	    }, function (rsp) { 				 // callback
+ 	        if (rsp.success) {
+ 	            //alert("완료 -> imp_uid : "+rsp.imp_uid+" / merchant_uid(orderKey) : " +rsp.merchant_uid);
+ 	        	//location.href='/home'; 
+ 	        
+ 	        	if( orderCheck() == true ) {
+	 	            var form = document.getElementById("frm");
+	 	            form.action = "/product/orderProc";
+	 	            form.submit();  
+ 	            } else {
+ 	            	alert("실패 : 코드("+rsp.error_code+") / 메세지(" + rsp.error_msg + ")");
+ 	            }
+ 	        } else {
+ 	            alert("실패 : 코드("+rsp.error_code+") / 메세지(" + rsp.error_msg + ")");
+ 	        }
+ 	    });
+ 	}//kakaopay
+ 	
     
 		
 

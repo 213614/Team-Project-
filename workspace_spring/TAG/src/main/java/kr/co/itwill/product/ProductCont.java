@@ -10,6 +10,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.ibatis.util.MapUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -337,8 +338,22 @@ public class ProductCont {
 	@ResponseBody
 	@RequestMapping(value = "/product/addcart", method = RequestMethod.POST)
 	public int addcart(@RequestParam int cnt, @RequestParam int pro_no, @RequestParam String m_id) {
-		return productDao.addcart(cnt, pro_no, m_id);
-	}
+		
+		Map<String, Object> map = new HashMap<>();
+		
+		map = productDao.cartcntselect(pro_no, m_id);
+		//System.out.println(map);
+		
+		if (map == null || map.isEmpty()) {
+			//System.out.println(1);
+			return productDao.addcart(cnt, pro_no, m_id);
+		}else {
+			//System.out.println(0);
+			int cart_no = (int) map.get("cart_no");
+			return productDao.updatecart(pro_no, cart_no, cnt, m_id);
+		}//if end
+	
+	}//end 
 	
 	@ResponseBody
 	@RequestMapping(value = "/product/like", method = RequestMethod.POST)
@@ -494,7 +509,7 @@ public class ProductCont {
 			//mav.setViewName("/product/orderSucc");
 			
 			//return mav;
-			return "redirect:/product/succtest";
+			return "redirect:/product/succ";
 		/*
 		}else { //session아이디를 불러오지 못했다면
 			mav.setViewName("/memberGeneral/alert"); //알림페이지로 이동
@@ -507,12 +522,13 @@ public class ProductCont {
 	}//end
 	
 
-	@RequestMapping("/product/succtest") 
+	@RequestMapping("/product/succ") 
 	public ModelAndView succtest (HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("/product/orderSucc");
 		String m_id = (String)session.getAttribute("s_m_id");
 		//System.out.println("test111");
+		
 		//주문정보 불러오기
 		ProdcutOrderDTO productOrder = productDao.recentOrder(m_id);
 		mav.addObject("productOrder", productOrder);

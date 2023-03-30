@@ -9,7 +9,6 @@
 
 .barBtn{
 	padding-left:470px;
-	height:80px;
 }
 
 .barBtn .bar1, .barBtn .bar2, .barBtn .bar3{
@@ -46,8 +45,10 @@
 	border: 3px solid white;
 }
 
-
-
+#ticketSalejsp, #ticketDeliveryjsp {
+ 	width: 850px; 
+ 	padding-left: 70px;
+}
 
 #ticketSalejsp p, #ticketDeliveryjsp p {
 	font-size:12px;
@@ -130,7 +131,7 @@
 
 
 <div id="ticketSalejsp">
-	<div class="barBtn">
+	<div class="barBtn" style="padding-left: 400px;">
 	    <button type="button" class="btn bar3">수령방법</button>
 	    <button type="button" class="btn bar2" style="background:#99ff99; color: black;">할인선택</button>
 	    <button type="button" class="btn bar1" style="background:black; color: white;">좌석선택</button>
@@ -254,7 +255,7 @@
 </div>
 
 <div id="ticketDeliveryjsp">
-	<div class="barBtn">
+	<div class="barBtn" style="padding-left: 400px;">
 	    <button type="button" class="btn bar3" style="background:#99ff99; color: black;">수령방법</button>
 	    <button type="button" class="btn bar2">할인선택</button>
 	    <button type="button" class="btn bar1" style="background:black; color: white;">좌석선택</button>

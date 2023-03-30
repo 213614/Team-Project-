@@ -60,7 +60,7 @@
 
 
 .stageBar {
-	width: 845px;
+	width: 837px;
 	height:40px;
 	background: lightgrey;
 	text-align:center;
@@ -86,9 +86,6 @@
 }
 
 </style>
-
-
-
 
 
 
@@ -167,15 +164,24 @@
 			<tr>
 			<!-- X구역 행마다 들어가는 빈공간 배열 선언 -->
 			<c:set var="nullX" value="<%=new int[] {0,1,2,3,3,5,6} %>"/>
+			<!-- null x = 좌석이 없어야하는 공간 : 한 열당 비어야하는 좌석의 수 ex: 1열엔 0, 2열엔 1석 -->
+			
 			<!-- "seatX" 좌석의 고유번호(flags의 갯수와 일치) -->
 			<c:set var="seatX" value="0"/>
 			
 			<c:forEach var="r" begin="1" end="${fn:length(nullX)}" step="1">
 				<c:forEach var="nullXtd" begin="1" end="${nullX[r-1]}" step="1">
+				
 					<td></td>
+					<!-- 빈공간배열에 있는 공간들은 input버튼을 넣지 않아서 빈공간으로 만든다 -->
+					<!-- 이 반복문이 위에있으면 왼쪽에 빈좌석 / 칸 생성 (아래 c 반복문)보다 아래에 있으면 오른쪽이 빈좌석이된다 -->
+					
 				</c:forEach><!-- nullX end -->
+				
 				<c:forEach var="c" begin="1" end="${15-nullX[r-1]+1}" step="1">
-					<td>
+					<td>						<!-- ↑ 15(한 줄에 최대 좌석수) - 빈좌석배열의[인덱스값(이라서-1)] + 1(옆에 몇 열인지 숫자띄워야해서) -->
+												<!-- ex. 1열은 nullX[1-1=0 == 0] 이라서 빈좌석이 없이 풀로 들어감 -->
+												
 						<c:if test="${c <= (15-nullX[r-1])}">
 							<!-- ${seatX} 1씩 늘어나게하기 -->
 							<c:set var="seatX" value="${seatX+1}"/>
@@ -188,6 +194,7 @@
 					</td>
 				</c:forEach><!-- c end -->
 			</c:forEach><!-- r end -->
+			
 			</tr>
 		</table>
 	</div><!-- id="rseatX" end -->
@@ -199,6 +206,7 @@
 			<c:set var="nullYL"   value="<%=new int[] {4,3,3,2,1,0,1} %>"/><!-- Left -->
 			<c:set var="nullYR"   value="<%=new int[] {3,3,2,1,1,0,1} %>"/><!-- Right -->
 			<c:set var="nullYAll"   value="<%=new int[] {7,6,5,3,2,0,2} %>"/><!-- L+R -->
+			
 			<!-- "seatY" 좌석의 고유번호(flags의 갯수와 일치) -->
 			<c:set var="seatY" value="0"/>
 			
@@ -326,6 +334,9 @@ for(let i = 1; i < flagsA.length; i++){
 
 //X구역 R등급, S등급, A등급
 for(let i = 1; i < flagsX.length; i++){ 
+	
+	// 지정 구역들 등급을 구분하기 위한 if문 (1~29번까지는 r석 등)	
+	
 	if(i <= 29){
 		$("#btnX"+i).addClass("R");
 		//$("#btnX"+i)[0].style.background = "mediumslateblue"; //R등급 보라색
@@ -341,7 +352,9 @@ for(let i = 1; i < flagsX.length; i++){
 	if(!flagsX[i]){//false이면
 		$("#btnX"+i).addClass("on");
 	}//if end
+
 }//for end
+
 for(let i = 1; i < flagsY.length; i++){ //Y구역 R등급, S등급, A등급
 	if(i <= 43){
 		$("#btnY"+i).addClass("R");
@@ -359,6 +372,7 @@ for(let i = 1; i < flagsY.length; i++){ //Y구역 R등급, S등급, A등급
 		$("#btnY"+i).addClass("on");
 	}//if end
 }//for end
+
 for(let i = 1; i < flagsZ.length; i++){ //Z구역 R등급, S등급, A등급
 	if(i <= 29){
 		$("#btnZ"+i).addClass("R");
@@ -386,9 +400,16 @@ function standAdd(SeatNum, section, flagNum){ //좌석번호, 구역이름, 버�
 	switch (section){
 		case "A" : 
 			if(flagsA[flagNum]){ //좌석을 선택할 때
+				
 				flagsA[flagNum]=false; swt=true; break;
+				// a구역의 flagA 배열(맨위 전역변수, A구역의 좌석번호들이 들어있음)의 해당 번호(좌석번호)를 false로 변환(fales=선택한좌석)
+				// → swt를 true로 변환해서 아래 if문 돌리기
+				
 			}else{ //좌석선택을 해제할 때
-				flagsA[flagNum]=true; swt=false; break;
+				
+				flagsA[flagNum]=true; swt=false; break; 
+				// a구역의 flagA배열의 해당 좌석번호를 true로 변환 (선택 해제=true)
+				
 			}//if end
 		case "B" : 
 			if(flagsB[flagNum]){ //좌석을 선택할 때
@@ -410,6 +431,7 @@ function standAdd(SeatNum, section, flagNum){ //좌석번호, 구역이름, 버�
 		$("#btn"+section+flagNum).addClass("on"); //#btnA+seatNo에 class="on" 추가
 		$("#panel").append(input); //<div id="panel">안에 <input class=input+section+flagNum></input> 생성
 		$("#panel").scrollTop($("#seatAddFormjsp").height());
+		// → class on을 추가해서 css로 선택된 좌석의 컬러를 바꿔준다 + 옆에 어떤 구역을 선택했는지 텍스트를 띄워준다  
 		
 		let input2="";
 		input2 += "<input type='text' class='input";
@@ -419,6 +441,7 @@ function standAdd(SeatNum, section, flagNum){ //좌석번호, 구역이름, 버�
 		input2 += "'>";
 		$("#addedSeat").append(input2);
 		countSeats(); //좌석수 계산하기
+		// → 현장수령/배송으로 넘어갔을때에 옆에 선택좌석 텍스트를 띄워주기 위함 
 		
 		let input3="";
 		input3 += "<input type='hidden' class='input";
@@ -427,11 +450,14 @@ function standAdd(SeatNum, section, flagNum){ //좌석번호, 구역이름, 버�
 		input3 += 							section+flagNum;
 		input3 += "'>";
 		$("#addedSeat").append(input3);
+		// →  선택된 좌석을 hidden값으로 넘겨서 주문서상세에 예매확인용 칼럼에 값을 넣기 위함 (팔린 좌석은 선택하면 안되니까)
+		
 	}else{ //좌석선택을 해제할 때
 		$("#btn"+section+flagNum).removeClass("on"); //#btn+seatNo에 class="on" 제거
 		$("input").remove(".input"+section+flagNum); //<input class=input+section+flagNum></input> 제거
 		countSeats(); //좌석수 계산하기
 	}//if end
+	
 }//standAdd() end
 
 

@@ -228,37 +228,37 @@ input[type="checkbox"] + label:before {
 				<div style="padding: 15px 20px; height: 650px; background-color: black; "> 
 					<p style="font-weight: 500; color: white; margin-bottom: -5px;">상품 정보</p>
 					
-					<hr style="background-color: white; opacity: 60%;">
+					<hr style="background-color: white; opacity: 60%; <c:if test="${cartcnt == 1}"> margin-top: 10px;</c:if>">
 					
-				<div style="overflow: auto; height: 170px;">
-					
-					<c:forEach var="row" items="${cartorder}" varStatus="vs">
-							<input type="hidden" value="${row.pro_no}" name="pro_no"/>
-							<input type="hidden" value="${row.cnt}" name="detail_cnt"/>
-							<input type="hidden" value="${row.org_price}" name="org_price"/>
-							<input type="hidden" value="${row.cart_no}" name="cart_no"/>
-							
-							<div style="width: 80px; height: 80px; overflow: hidden; float: left; display: inline-block; position: relative;">
-								<img src="/storage/${row.postername}" style="width:100%; height:100%; object-fit:cover;" >
-							</div><!-- product image -->
-							
-							<div style="width: 260px; float: left; padding: 0 0 50px 15px;"> 
-								<p style="font-size: 17px; font-weight:600; color:white; margin-bottom: 0; text-align: justify;">
-									${row.title}
-								</p>
+					<div style="overflow: auto; <c:if test="${cartcnt != 1}"> height: 170px; </c:if> ">
+		
+						<c:forEach var="row" items="${cartorder}" varStatus="vs">
+								<input type="hidden" value="${row.pro_no}" name="pro_no"/>
+								<input type="hidden" value="${row.cnt}" name="detail_cnt"/>
+								<input type="hidden" value="${row.org_price}" name="org_price"/>
+								<input type="hidden" value="${row.cart_no}" name="cart_no"/>
 								
-								<div style="margin-top: 5px; color: white; font-size: 13px;">
-									<span >
-										 ${row.color} / ${row.size} 
-									</span>
-									<span style="float:right; padding-right: 10px;">
-										<strong style="color:lightgreen;">${row.cnt}</strong> 개
-									</span>
-								</div>
-							</div><!-- product info -->
-					</c:forEach>
+								<div style="width: 80px; height: 80px; overflow: hidden; float: left; display: inline-block; position: relative;">
+									<img src="/storage/${row.postername}" style="width:100%; height:100%; object-fit:cover;" >
+								</div><!-- product image -->
+								
+								<div style="width: 260px; float: left; padding: 0 0 50px 15px; <c:if test="${cartcnt == 1}"> padding: 0px;</c:if>"> 
+									<p style="font-size: 17px; font-weight:600; color:white; margin-bottom: 0; text-align: justify;">
+										${row.title}
+									</p>
+									
+									<div style="margin-top: 5px; color: white; font-size: 13px;">
+										<span >
+											 ${row.color} / ${row.size} 
+										</span>
+										<span style="float:right; padding-right: 10px;">
+											<strong style="color:lightgreen;">${row.cnt}</strong> 개
+										</span>
+									</div>
+								</div><!-- product info -->
+						</c:forEach>
 				
-				</div>	
+					</div>	
 					
 					<div style="clear: both;"></div>
 					
@@ -362,15 +362,60 @@ input[type="checkbox"] + label:before {
    
    var m_id = "<c:out value='${m_id}'/>"
    	
-   // 카카오페이 버튼! (한번 이미 결제 완료하면 아래 merchant_uid: 를 새롭게 바꿔줘야 결제진행이 됩니다...이유는 모름)
+   // ↓ 카카오 페이용 4자리 랜덤 숫자 함수 
+   let str = ''
+   for (let i = 0; i < 4; i++) {	// 4자리 랜덤 숫자 
+     str += Math.floor(Math.random() * 10)
+   }//for end
+   
+   var randomuid = m_id + str;
+   
+   
+   // 카카오페이 버튼! 
    function payment(data) {
 		//alert(m_id);
+		//alert(str);
+		//alert(m_id + str);
+		//alert(randomuid);
+		
+       // 약관 동의 체크박스 
+       if ( !($('#chk').is(':checked')) ){
+          alert('결제를 위해 약관에 동의해주세요.');
+          
+          return false;
+
+       }
+       
+       // 수령인 정보
+       if ( $('#rec_name').val() == '' ) {
+          //alert('받는 사람 이름이 입력되지 않았습니다.');
+          $('#namealert').css('display', 'inline-block');
+          $('#rec_name').focus();
+          
+          return false;  
+       }
+       
+       if ( $('#rec_tel').val() == '' ){
+          //alert('받는 사람 연락처가 입력되지 않았습니다.');
+          $('#telalert').css('display', 'inline-block');
+          $('#rec_tel').focus();
+          
+          return false;
+       }
+       
+	    if ( $('#rec_addr2').val() == '' ){
+          //alert('상세 주소가 입력되지 않았습니다.');
+          $('#addralert').css('display', 'inline-block');
+          $('#rec_addr2').focus();
+          
+	       return false;
+	    }
 		
 	    IMP.init('imp13534036');			 //아임포트 관리자 콘솔에서 확인한 '가맹점 식별코드' 입력
 	    IMP.request_pay({					 // param
 	        pg: "kakaopay.TC0ONETIME", 		 //pg사명 or pg사명.CID (잘못 입력할 경우, 기본 PG사가 띄워짐)
 	        pay_method: "card", 			 //지불 방법
-	        merchant_uid: m_id,    	         //"iamport_test_id", //가맹점 주문번호 (아임포트를 사용하는 가맹점에서 중복되지 않은 임의의 문자열을 입력)
+	        merchant_uid: randomuid,    	 //"iamport_test_id", //가맹점 주문번호 (아임포트를 사용하는 가맹점에서 중복되지 않은 임의의 문자열을 입력)
 	        name: "TAG:Ticket And Goods",    //결제창에 노출될 상품명
 	        amount: total_price, 			 //금액
 	        buyer_email : "teser@naver.com", 
@@ -379,7 +424,9 @@ input[type="checkbox"] + label:before {
 	    }, function (rsp) { 				 // callback
 	        if (rsp.success) {
 	            //alert("완료 -> imp_uid : "+rsp.imp_uid+" / merchant_uid(orderKey) : " +rsp.merchant_uid);
-	        	//location.href='/home';
+	        	//location.href='/home'; 
+	        	
+	        	orderCheck();
 	        } else {
 	            alert("실패 : 코드("+rsp.error_code+") / 메세지(" + rsp.error_msg + ")");
 	        }
@@ -592,6 +639,8 @@ input[type="checkbox"] + label:before {
         // 약관 동의 체크박스 
         if ( !($('#chk').is(':checked')) ){
            alert('결제를 위해 약관에 동의해주세요.');
+           
+           return false;
 
         }
         
@@ -600,21 +649,26 @@ input[type="checkbox"] + label:before {
            //alert('받는 사람 이름이 입력되지 않았습니다.');
            $('#namealert').css('display', 'inline-block');
            $('#rec_name').focus();
-  
+           
+           return false;  
         }
+        
         if ( $('#rec_tel').val() == '' ){
            //alert('받는 사람 연락처가 입력되지 않았습니다.');
            $('#telalert').css('display', 'inline-block');
            $('#rec_tel').focus();
-
+           
+           return false;
         }
-      if ( $('#rec_addr2').val() == '' ){
+        
+	    if ( $('#rec_addr2').val() == '' ){
            //alert('상세 주소가 입력되지 않았습니다.');
            $('#addralert').css('display', 'inline-block');
            $('#rec_addr2').focus();
-
-        }
-        
+           
+	       return false;
+	    }
+	        
        
        var d_fee = document.getElementById("d_fee").innerText
        var cp_dis = document.getElementById("cp_dis").innerText

@@ -550,6 +550,7 @@ line-height : 10px;
 				<input type="hidden" name="title" value="${concert.title}" />
 				<!-- c_price hidden 값 -->
 				<input type="hidden" name="price" value="${concert.price}" />
+		    	
 		    	<div id="mainContainer">
 					<!-- include 영역 시작 -->
 					<c:choose>
@@ -1261,6 +1262,8 @@ function reSelectFN(){
 //선택한 좌석 수 계산하기
 function countSeats(){
 	let cntSeats=$("#panel").children().length;
+	// 선택한 좌석에 한줄씩 생기는 input태그의 개수 = 선택된 좌석
+	
 	//$("#seatCnt").val("총 0석 선택하였습니다");
 	$("#seatCnt").val("총 "+cntSeats+"석 선택하였습니다");
 }//countSeats() end

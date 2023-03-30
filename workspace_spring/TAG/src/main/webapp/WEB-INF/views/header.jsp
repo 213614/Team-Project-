@@ -47,6 +47,7 @@
 </head>
 
 <script>
+
 $( document ).ready(function() {
 	$.ajax({
 		url   	 : "/headermycartCnt.do"
@@ -65,12 +66,6 @@ $( document ).ready(function() {
 		}//error end
 	})//ajax end
 });//ready end
-
-
-
-
-
-
 
 </script>
 
@@ -292,62 +287,7 @@ $( document ).ready(function() {
 							</c:when>
 						</c:choose>
 					
-						<!--  
-						<a href="#" class="user-profile">
-							<svg width="23" height="23" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-							<g clip-path="url(#clip0_429_9074)">
-							<path d="M3.99988 18C3.99988 15.7908 5.79074 14 7.99988 14H15.9999C18.209 14 19.9999 15.7908 19.9999 18V18C19.9999 19.1045 19.1044 20 17.9999 20H5.99988C4.89531 20 3.99988 19.1045 3.99988 18V18Z" stroke="#292929" stroke-width="1.5" stroke-linejoin="round"/>
-							<circle cx="11.9999" cy="6.99997" r="3" stroke="#292929" stroke-width="1.5"/>
-							</g>
-							<defs>
-							<clipPath id="clip0_429_9074">
-							<rect width="24" height="24" fill="white"/>
-							</clipPath>
-							</defs>
-							</svg>
-						</a>
-						-->
-						
-						
-						
-						<!-- 
-						<a href="/mypage/mylike" class="like">
-							<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-							<g clip-path="url(#clip0_429_9297)">
-							<path d="M19.0711 13.1421L13.4142 18.799C12.6332 19.58 11.3668 19.58 10.5858 18.799L4.92894 13.1421C2.97632 11.1895 2.97632 8.02369 4.92894 6.07106C6.88157 4.11844 10.0474 4.11844 12 6.07106C13.9526 4.11844 17.1185 4.11844 19.0711 6.07106C21.0237 8.02369 21.0237 11.1895 19.0711 13.1421Z" stroke="#292929" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-							</g>
-							<defs>
-							<clipPath id="clip0_429_9297">
-							<rect width="24" height="24" fill="white"/>
-							</clipPath>
-							</defs>
-							</svg>
-						</a>
-						
-						
-						
-						
-						
-						<a href="/cart" class="cart">
-							<!-- <span class="item-in-cart">2</span>
-							<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-							<g clip-path="url(#clip0_429_9132)">
-							<path d="M4 9H20L19.1654 18.1811C19.0717 19.2112 18.208 20 17.1736 20H6.82643C5.79202 20 4.92829 19.2112 4.83464 18.1811L4 9Z" stroke="#292929" stroke-width="1.5" stroke-linejoin="round"/>
-							<path d="M8 11V8C8 5.79086 9.79086 4 12 4C14.2091 4 16 5.79086 16 8V11" stroke="#292929" stroke-width="1.5" stroke-linecap="round"/>
-							</g>
-							<defs>
-							<clipPath id="clip0_429_9132">
-							<rect width="24" height="24" fill="white"/>
-							</clipPath>
-							</defs>
-							</svg>					
-						<c:if test="${mycartCnt != 0}">
-						${mycartCnt}
-						</c:if>
-						</a>
-						-->
-						
-						
+
 						<!-- 로그인 하지 않은 상태 -->
 						<c:if test="${mem_grade == null}">
 							<a href="/loginForm">
