@@ -20,12 +20,11 @@
 ID   :  privatecurve
 <br>
 PW :  seller1234
-<
 > 일반회원 계정 
 ID   :  hansaem
 <br>
 PW :  buyer1234
-<
+
 
 <hr>
 
