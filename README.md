@@ -19,6 +19,7 @@
 > 판매자 회원 계정      <br>
 >ID   :  privatecurve  <br>
 >PW :  seller1234
+><br>
 > 일반회원 계정        <br>
 >ID   :  hansaem       <br>
 >PW :  buyer1234
