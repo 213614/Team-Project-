@@ -35,13 +35,49 @@ public class MemberSellerCont {
 	
 //  [로그인 / 로그아웃] 시작  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  //
 	
+
+	
+
+	// 포폴용 자동로그인 ------------------------------------------------------------------------------
+	
+	@RequestMapping(value = "/loginS.do", method = RequestMethod.GET)
+	public ModelAndView AutologinS(HttpSession session) {
+		ModelAndView mav = new ModelAndView(); 
+		
+		MemberSellerDTO dto = new MemberSellerDTO();
+		
+		String id= "privatecurve";
+		String pw= "seller1234";
+		
+		dto.setP_id(id);
+		dto.setP_pw(pw);
+		
+		String mem_grade = memberSellerDao.select(dto); 
+		
+		//System.out.println(mem_grade);
+		
+		session.setAttribute("mem_grade", mem_grade);
+		session.setAttribute("s_p_id", id);
+		
+	
+		mav.setViewName("redirect:/home");
+	
+		return mav;
+	}//loginGeneral() end
+
+	// 포폴용 자동로그인 ------------------------------------------------------------------------------
+	
+	
+	
+/*
+
 	// [로그인] - 일반 or 판매자 로그인 선택 페이지 연결
 	@RequestMapping(value = "/loginS.do", method = RequestMethod.GET)
 	public String loginSeller() {
 		return "memberSeller/loginFormSeller";
 	}//loginSeller() end
 
-	
+	 
 	// [로그인] - 로그인 페이지 연결
 	@RequestMapping(value = "/loginS.do", method = RequestMethod.POST)
 	public ModelAndView loginSellerProc(@ModelAttribute MemberSellerDTO dto, 
@@ -107,7 +143,7 @@ public class MemberSellerCont {
 		
 	}//loginGeneralProc() end
 
-	
+*/
 	
     // [회원가입] 시작  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - //
 	

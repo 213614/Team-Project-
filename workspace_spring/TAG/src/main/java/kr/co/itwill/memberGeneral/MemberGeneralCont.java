@@ -34,12 +34,45 @@ public class MemberGeneralCont {
 	
 //  [로그인 / 로그아웃] 시작  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  //
 	
+	
 	// [로그인] - 일반 or 판매자 로그인 선택 페이지 연결
 	@RequestMapping("/loginForm")
 	public String loginForm() {
 		return "login/loginForm";
 	}//home() end
 	
+
+	// 포폴용 자동로그인 ------------------------------------------------------------------------------
+	
+	@RequestMapping(value = "/loginG.do", method = RequestMethod.GET)
+	public ModelAndView AutologinG(HttpSession session) {
+		ModelAndView mav = new ModelAndView(); 
+		
+		MemberGeneralDTO dto = new MemberGeneralDTO();
+		
+		String id= "hansaem";
+		String pw= "buyer1234";
+		
+		dto.setM_id(id);
+		dto.setM_pw(pw);
+		
+		String mem_grade = memberGeneralDao.select(dto); 
+		
+		//System.out.println(mem_grade);
+		
+		session.setAttribute("mem_grade", mem_grade);
+		session.setAttribute("s_m_id", id);
+		
+	
+		mav.setViewName("redirect:/home");
+	
+		return mav;
+	}//loginGeneral() end
+
+	// 포폴용 자동로그인 ------------------------------------------------------------------------------
+	
+	
+	/* 
 	
 	// [로그인] - 로그인 페이지 연결
 	@RequestMapping(value = "/loginG.do", method = RequestMethod.GET)
@@ -115,7 +148,7 @@ public class MemberGeneralCont {
 		
 	}//loginGeneralProc() end
 	
-	
+	*/
 
 	// [로그아웃]
 	@RequestMapping("/logout.do")
