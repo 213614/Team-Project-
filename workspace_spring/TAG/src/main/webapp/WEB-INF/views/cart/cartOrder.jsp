@@ -224,13 +224,10 @@ input[type="checkbox"] + label:before {
 	
 	<div style="display:inline-block; width: 33%; margin: 0 10px; float: right;">
 		<div class="stickyP" style="height: 100%;">
-<<<<<<< HEAD
-			<div class="stickyC" style="position: sticky; top: 100px; padding-bottom: 100px;">
-			
-=======
+
 			<div class="stickyC" style="position: sticky; top: 100px; padding-bottom: 100px;">	
 				
->>>>>>> a4ce302a76e49408dcb8222d886f79b1d10aad35
+
 				<c:choose>
 					<c:when test="${cartcnt == 1}">
 						<div style="padding: 15px 20px; height: 550px; background-color: black; "> 
@@ -239,11 +236,7 @@ input[type="checkbox"] + label:before {
 						<div style="padding: 15px 20px; height: 650px; background-color: black; "> 
 					</c:otherwise>
 				</c:choose>
-<<<<<<< HEAD
-				
-=======
-					
->>>>>>> a4ce302a76e49408dcb8222d886f79b1d10aad35
+
 					<p style="font-weight: 500; color: white; margin-bottom: -5px;">상품 정보</p>
 					
 					<hr style="background-color: white; opacity: 60%; <c:if test="${cartcnt == 1}"> margin-top: 10px;</c:if>">

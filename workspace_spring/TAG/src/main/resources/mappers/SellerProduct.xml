@@ -180,9 +180,9 @@
 			                SELECT P.pro_no, pro_name, P.p_id, stock, color, size, price, regdate, edit, category, status, postername, likecnt, count(O.pro_no) AS sales, (stock-(count(O.pro_no))) AS afstock
 			                FROM product P LEFT JOIN order_detail O
 			                               ON P.pro_no = O.pro_no
-			                GROUP BY p.pro_no
-			                HAVING p.p_id = #{p_id}
-			                ORDER BY p.pro_no DESC
+			                GROUP BY P.pro_no
+			                HAVING P.p_id = #{p_id}
+			                ORDER BY P.pro_no DESC
 			        )aa
 			        where UPPER(pro_name) LIKE  #{pro_name}
 			    ) CC, (SELECT @RNO := 0) BB 
